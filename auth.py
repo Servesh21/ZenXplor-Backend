@@ -214,7 +214,7 @@ def authorize_google():
         db.session.commit()
 
     access_token = create_access_token(identity=str(user.id))
-    response = make_response(redirect("http://localhost:5173/storage-overview"))
+    response = make_response(redirect(os.getenv("FRONTEND_URL", "http://localhost:5173/storage-overview")))  # Adjust frontend URL
     response.set_cookie("access_token_cookie", access_token, httponly=True, samesite="Lax", secure=False)
     return response
 
@@ -246,7 +246,7 @@ def authorize_github():
         db.session.commit()
 
     access_token = create_access_token(identity=str(user.id))
-    response = make_response(redirect("http://localhost:5173/storage-overview"))  # Adjust frontend URL
+    response = make_response(redirect(os.getenv("FRONTEND_URL", "http://localhost:5173/storage-overview")))  # Adjust frontend URL
     response.set_cookie("access_token_cookie", access_token, httponly=True, samesite="Lax", secure=False)
     return response
 
